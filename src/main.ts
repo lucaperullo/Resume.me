@@ -20,16 +20,13 @@ import path from "path";
 // import path,{ dirname } from "path";
 const dotenv = require("dotenv");
 // create corsOptions with origin filter 
-const whitelist = ["http://localhost:3000/",undefined, null]
-const corsOptions = {
-  origin: function (origin: any, callback: any) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
+// Add a list of allowed origins.
+// If you have more origins you would like to add, you can add them to the array below.
+const allowedOrigins = ['http://localhost:3000'];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins
+};
 
 
 
@@ -41,7 +38,7 @@ const app = express();
 const port = process.env.PORT || 2023;
 
 app.use(express.json());
-app.use(cors(corsOptions))
+app.use(cors(options))
 app.use(cookieParser());
 app.use(usersRouter);
 app.use("/skills", skillsRouter);
