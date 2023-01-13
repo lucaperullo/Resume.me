@@ -7,7 +7,7 @@ export interface User extends Document {
   surname: string;
   email: string;
   password: string;
-  role: 'Admin' | 'User';
+  role: "Admin" | "User";
   refreshTokens: { token: string }[];
 }
 
@@ -27,6 +27,14 @@ const UserSchema = new Schema(
       minlength: [8, "Password is too short!"],
     },
     role: { type: String, default: "User", enum: ["Admin", "User"] },
+    about: { type: Schema.Types.ObjectId, ref: "About" },
+    certifications: [{ type: Schema.Types.ObjectId, ref: "Certification" }],
+    companies: [{ type: Schema.Types.ObjectId, ref: "Company" }],
+    experiences: [{ type: Schema.Types.ObjectId, ref: "Experience" }],
+    locations: [{ type: Schema.Types.ObjectId, ref: "Location" }],
+    projects: [{ type: Schema.Types.ObjectId, ref: "Project" }],
+    skills: [{ type: Schema.Types.ObjectId, ref: "Skill" }],
+    reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
     refreshTokens: [{ token: { type: String } }],
   },
   { timestamps: true }
@@ -43,7 +51,10 @@ UserSchema.pre("save", async function (this: User, next) {
   next();
 });
 
-UserSchema.statics.findByCredentials = async function (email: string, password: string): Promise<User | null> {
+UserSchema.statics.findByCredentials = async function (
+  email: string,
+  password: string
+): Promise<User | null> {
   const user = await this.findOne({ email });
 
   if (user) {
