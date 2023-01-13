@@ -33,6 +33,7 @@ const corsOptions = {
 
 
 
+
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = dirname(__filename);
 const app = express();
@@ -40,7 +41,7 @@ const app = express();
 const port = process.env.PORT || 2023;
 
 app.use(express.json());
-
+app.use(cors(corsOptions))
 app.use(cookieParser());
 app.use(usersRouter);
 app.use("/skills", skillsRouter);
