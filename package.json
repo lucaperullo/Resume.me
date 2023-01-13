@@ -5,8 +5,8 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint . --fix",
-    "start": "node dist/main.js",
-    "dev": "ts-node src/main.ts",
+    "start": "node -r dotenv/config dist/main.js",
+    "dev": "ts-node -r dotenv/config src/main.ts",
     "build": "tsc"
   },
   "dependencies": {
