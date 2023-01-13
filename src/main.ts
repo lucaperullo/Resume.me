@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
-import cors from "cors";
+// import cors from "cors";
 import listEndpoints from "express-list-endpoints";
 
 import cookieParser from "cookie-parser";
@@ -14,14 +14,15 @@ import experiencesRouter from "./routes/experiences";
 import locationsRouter from "./routes/location";
 import metadataRouter from "./routes/metadata";
 import projectsRouter from "./routes/projects";
-import { fileURLToPath } from 'url';
+import path from "path";
+// import { fileURLToPath } from 'url';
 
-import path,{ dirname } from "path";
+// import path,{ dirname } from "path";
 const dotenv = require("dotenv");
 
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = dirname(__filename);
 const app = express();
 
 const port = process.env.PORT || 2023;
