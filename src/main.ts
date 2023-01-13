@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
-// import cors from "cors";
+import cors from "cors";
 import listEndpoints from "express-list-endpoints";
 
 import cookieParser from "cookie-parser";
@@ -19,6 +19,18 @@ import path from "path";
 
 // import path,{ dirname } from "path";
 const dotenv = require("dotenv");
+// create corsOptions with origin filter 
+const whitelist = ["http://localhost:3000/","*", null]
+const corsOptions = {
+  origin: function (origin: any, callback: any) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
 
 
 // const __filename = fileURLToPath(import.meta.url);
