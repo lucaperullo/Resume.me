@@ -2,8 +2,6 @@ import { Schema, model } from "mongoose";
 
 const aboutSchema = new Schema(
   {
-<<<<<<< HEAD
-=======
   name:{
     it: {
       type: String,
@@ -35,7 +33,6 @@ const aboutSchema = new Schema(
     },
   },
 
->>>>>>> e7291c26cab314eec0a1f5d2407e10cdc87f3c11
     description: {
       it: {
         type: String,
