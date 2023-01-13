@@ -9,6 +9,11 @@ import usersRouter from "./routes/user";
 import skillsRouter from "./routes/skills";
 import aboutRouter from "./routes/about";
 import certificationsRouter from "./routes/certifications";
+import companiesRouter from "./routes/companies";
+import experiencesRouter from "./routes/experiences";
+import locationsRouter from "./routes/location";
+import metadataRouter from "./routes/metadata";
+import projectsRouter from "./routes/projects";
 
 const app = express();
 
@@ -21,6 +26,11 @@ app.use(usersRouter);
 app.use("/skills", skillsRouter);
 app.use("/about", aboutRouter);
 app.use("/certifications", certificationsRouter);
+app.use("/companies", companiesRouter);
+app.use("/experience", experiencesRouter);
+app.use("/locations", locationsRouter);
+app.use("/medadata", metadataRouter)
+app.use("/projects", projectsRouter)
 
 
 const connectToDatabase = async (app: any) => {

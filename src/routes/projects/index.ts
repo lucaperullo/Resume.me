@@ -86,3 +86,5 @@ projectsRouter.delete(
     }
   }
 );
+
+export default projectsRouter;
