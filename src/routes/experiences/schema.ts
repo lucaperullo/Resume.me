@@ -107,3 +107,5 @@ const experienceSchema = new Schema({
        
     },
 });
+
+export default model("Experience", experienceSchema);
