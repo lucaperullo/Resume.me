@@ -14,7 +14,9 @@ import experiencesRouter from "./routes/experiences";
 import locationsRouter from "./routes/location";
 import metadataRouter from "./routes/metadata";
 import projectsRouter from "./routes/projects";
- require('dotenv').config()
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 
