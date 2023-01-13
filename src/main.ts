@@ -8,7 +8,7 @@ import config from "./config/config";
 import usersRouter from "./routes/user";
 import skillsRouter from "./routes/skills";
 import aboutRouter from "./routes/about";
-import certification from "./routes/certifications";
+import certificationsRouter from "./routes/certifications";
 
 const app = express();
 
@@ -19,6 +19,9 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(usersRouter);
 app.use("/skills", skillsRouter);
+app.use("/about", aboutRouter);
+app.use("/certifications", certificationsRouter);
+
 
 const connectToDatabase = async (app: any) => {
   try {

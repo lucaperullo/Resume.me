@@ -40,3 +40,63 @@ certificationsRouter.post(
     }
   }
 );
+
+// GET a certification by ID
+certificationsRouter.get(
+  "/certifications/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const id = req.params.id;
+      const certification = await certificationsSchema
+        .findById(id)
+        .populate("user", "name surname");
+      if (certification) {
+        res.send(certification);
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+);
+
+// PUT a certification by ID
+certificationsRouter.put(
+  "/certifications/:id",
+  authorize,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const certification = await certificationsSchema.findByIdAndUpdate(
+        req.params.id,
+        req.body.certification
+      );
+      if (certification) {
+        res.send("Ok");
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+);
+
+// DELETE a certification by ID
+certificationsRouter.delete(
+  "/certifications/:id",
+  authorize,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const certification = await certificationsSchema.findByIdAndDelete(
+        req.params.id
+      );
+      if (certification) {
+        res.send("Ok");
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+);
+
+export default certificationsRouter;
