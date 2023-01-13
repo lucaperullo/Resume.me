@@ -4,7 +4,7 @@ import cors from "cors";
 import listEndpoints from "express-list-endpoints";
 
 import cookieParser from "cookie-parser";
-import config from "./config/config";
+
 import usersRouter from "./routes/user";
 import skillsRouter from "./routes/skills";
 import aboutRouter from "./routes/about";
@@ -14,10 +14,11 @@ import experiencesRouter from "./routes/experiences";
 import locationsRouter from "./routes/location";
 import metadataRouter from "./routes/metadata";
 import projectsRouter from "./routes/projects";
+ require('dotenv').config()
 
 const app = express();
 
-const port = config.PORT || 2023;
+const port = process.env.PORT || 2023;
 
 app.use(express.json());
 
@@ -37,7 +38,7 @@ const connectToDatabase = async (app: any) => {
   try {
     mongoose.set("strictQuery", true);
 
-    await mongoose.connect(config.MONGO_URI!);
+    await mongoose.connect(process.env.MONGO_URI!);
     app.listen(port, () => {
       console.table(listEndpoints(app));
       console.log("\x1b[36m%s\x1b[0m",`Server is having tough time running away from ${port} angry monkeys`);
