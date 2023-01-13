@@ -1,76 +1,91 @@
-// CURD 
-import { Router } from 'express';
-import companySchema from './schema';
-import { Request, Response, NextFunction } from 'express';
+// CURD
+import { Router } from "express";
+import companySchema from "./schema";
+import { Request, Response, NextFunction } from "express";
+import { authorize } from "../../utilities/auth/middleware";
+import { internationalizer } from "../../utilities/internationalization";
 
 const companiesRouter = Router();
 
-companiesRouter.get('/', async (req, res, next) => {
+// GET all companies
+companiesRouter.get(
+  "/",
+  async (req: any, res: Response, next: NextFunction) => {
     try {
-        const companies = await companySchema.find();
-        res.send(companies);
+      const companies = await companySchema.find();
+      res.send(companies);
     } catch (error) {
-        console.log(error);
-        next(error);
+      console.log(error);
     }
-    }
+  }
 );
 
-companiesRouter.get('/:id', async (req, res, next) => {
+// POST a new company
+companiesRouter.post(
+  "/",
+  authorize,
+  internationalizer,
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = req.params.id;
-        const company = await companySchema
-            .findById(id)
-            .populate('location');
-        if (company) {
-            res.send(company);
-        }
+      const newCompany = new companySchema(req.body);
+      await newCompany.save();
+      res.status(201).send({
+        message: "Company created",
+        company: newCompany,
+      });
     } catch (error) {
-        console.log(error);
-        next(error);
+      console.log(error);
     }
-});
-
-companiesRouter.post('/', async (req, res, next) => {
-    try {
-        const newCompany = new companySchema(req.body);
-        const { _id } = await newCompany.save();
-        res.status(201).send(_id);
-    } catch (error) {
-        console.log(error);
-        next(error);
-    }
-}
+  }
 );
 
-companiesRouter.put('/:id', async (req, res, next) => {
+// PUT a company by ID
+companiesRouter.put(
+  "/:id",
+  authorize,
+  internationalizer,
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const company = await companySchema.findByIdAndUpdate(
-            req.params.id,
-            req
-                .body
-                .location
-        );
-        if (company) {
-            res.send('Ok');
-        }
-    } catch (error) {
-        console.log(error);
+      const id = req.params.id;
+      const company = await companySchema.findByIdAndUpdate(id, req.body, {
+        runValidators: true,
+        new: true,
+      });
+      if (company) {
+        res.send(company);
+      } else {
+        const error: any = new Error(`Company with id ${id} not found!`);
+        error.httpStatusCode = 404;
         next(error);
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
-});
+  }
+);
 
-companiesRouter.delete('/:id', async (req, res, next) => {
+// DELETE a company by ID
+companiesRouter.delete(
+  "/:id",
+  authorize,
+  internationalizer,
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const company = await companySchema.findByIdAndDelete(req.params.id);
-        if (company) {
-            res.send('Deleted');
-        }
-    } catch (error) {
-        console.log(error);
+      const id = req.params.id;
+      const company = await companySchema.findByIdAndDelete(id);
+      if (company) {
+        res.send("Deleted");
+      } else {
+        const error: any = new Error(`Company with id ${id} not found!`);
+        error.httpStatusCode = 404;
         next(error);
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
-}
+  }
 );
 
 export default companiesRouter;

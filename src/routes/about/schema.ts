@@ -2,36 +2,36 @@ import { Schema, model } from "mongoose";
 
 const aboutSchema = new Schema(
   {
-  name:{
-    it: {
-      type: String,
-      required: true,
+    name: {
+      it: {
+        type: String,
+        required: true,
+      },
+      en: {
+        type: String,
+        required: true,
+      },
+      es: {
+        type: String,
+        required: true,
+      },
+      fr: {
+        type: String,
+        required: true,
+      },
+      de: {
+        type: String,
+        required: true,
+      },
+      pt: {
+        type: String,
+        required: true,
+      },
+      ru: {
+        type: String,
+        required: true,
+      },
     },
-    en: {
-      type: String,
-      required: true,
-    },
-    es: {
-      type: String,
-      required: true,
-    },
-    fr: {
-      type: String,
-      required: true,
-    },
-    de: {
-      type: String,
-      required: true,
-    },
-    pt: {
-      type: String,
-      required: true,
-    },
-    ru: {
-      type: String,
-      required: true,
-    },
-  },
 
     description: {
       it: {

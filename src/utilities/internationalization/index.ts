@@ -25,12 +25,15 @@ export const internationalizer = async (
     const { text: nameDe } = await translatte(name, { to: "de" });
     const { text: nameRu } = await translatte(name, { to: "ru" });
     const { text: nameEs } = await translatte(name, { to: "es" });
+    const { text: namePt } = await translatte(name, { to: "pt" });
+
     const { text: descriptionIt } = await translatte(description, { to: "it" });
     const { text: descriptionEn } = await translatte(description, { to: "en" });
     const { text: descriptionFr } = await translatte(description, { to: "fr" });
     const { text: descriptionDe } = await translatte(description, { to: "de" });
     const { text: descriptionRu } = await translatte(description, { to: "ru" });
     const { text: descriptionEs } = await translatte(description, { to: "es" });
+    const { text: descriptionPt } = await translatte(description, { to: "pt" });
     req.body.name = {
       it: nameIt,
       en: nameEn,
@@ -38,6 +41,7 @@ export const internationalizer = async (
       de: nameDe,
       ru: nameRu,
       es: nameEs,
+      pt: namePt,
     };
     req.body.description = {
       it: descriptionIt,
@@ -46,6 +50,7 @@ export const internationalizer = async (
       de: descriptionDe,
       ru: descriptionRu,
       es: descriptionEs,
+      pt: descriptionPt,
     };
     next();
   } catch (error) {

@@ -3,8 +3,34 @@ import { Schema, model } from "mongoose";
 const companySchema = new Schema(
   {
     name: {
-      type: String,
-      required: true,
+      it: {
+        type: String,
+        required: true,
+      },
+      en: {
+        type: String,
+        required: true,
+      },
+      es: {
+        type: String,
+        required: true,
+      },
+      fr: {
+        type: String,
+        required: true,
+      },
+      de: {
+        type: String,
+        required: true,
+      },
+      pt: {
+        type: String,
+        required: true,
+      },
+      ru: {
+        type: String,
+        required: true,
+      },
     },
     description: {
       it: {
@@ -50,36 +76,6 @@ const companySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Location",
       required: true,
-    },
-    keywords: {
-      it: {
-        type: String,
-        required: true,
-      },
-      en: {
-        type: String,
-        required: true,
-      },
-      es: {
-        type: String,
-        required: true,
-      },
-      fr: {
-        type: String,
-        required: true,
-      },
-      de: {
-        type: String,
-        required: true,
-      },
-      pt: {
-        type: String,
-        required: true,
-      },
-      ru: {
-        type: String,
-        required: true,
-      },
     },
   },
   {

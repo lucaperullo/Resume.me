@@ -1,25 +1,28 @@
 import { Router } from "express";
 
-import { Request, Response, NextFunction } from 'express';
-import  UserSchema  from "./schema";
+import { Request, Response, NextFunction } from "express";
+import UserSchema from "./schema";
 import { authenticate, refresh } from "../../utilities/auth";
 import { authorize } from "../../utilities/auth/middleware";
 
-
-
 const usersRouter = Router();
 
-usersRouter.post("/register", async (req: Request, res: Response, next: NextFunction) => {
+usersRouter.post(
+  "/register",
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const newUser = new UserSchema(req.body);
-        const { _id } = await newUser.save();
-        res.status(201).send(_id);
+      const newUser = new UserSchema(req.body);
+      await newUser.save();
+      res.status(201).send({ message: "User created", user: newUser });
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-})
+  }
+);
 
-usersRouter.post("/login", async (req: Request, res: Response, next: NextFunction) => {
+usersRouter.post(
+  "/login",
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
       console.log(email, password);
@@ -45,10 +48,13 @@ usersRouter.post("/login", async (req: Request, res: Response, next: NextFunctio
       res.send({ message: error });
       next(error);
     }
-  });
-  
-  // logout to clean the cookies
-  usersRouter.post("/logout", async (req: Request, res: Response, next: NextFunction) => {
+  }
+);
+
+// logout to clean the cookies
+usersRouter.post(
+  "/logout",
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       res
         .clearCookie("accessToken", {
@@ -65,13 +71,16 @@ usersRouter.post("/login", async (req: Request, res: Response, next: NextFunctio
       res.send({ message: error });
       next(error);
     }
-  });
-  
-  // tested
-  usersRouter.get("/refreshToken", async (req: Request, res: Response, next: NextFunction) => {
+  }
+);
+
+// tested
+usersRouter.get(
+  "/refreshToken",
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const oldRefreshToken = req.cookies.refreshToken;
-      const newTokens:any = await refresh(oldRefreshToken);
+      const newTokens: any = await refresh(oldRefreshToken);
       res.cookie("token", newTokens.token, {
         httpOnly: true,
       });
@@ -84,13 +93,18 @@ usersRouter.post("/login", async (req: Request, res: Response, next: NextFunctio
     } catch (error) {
       next(error);
     }
-  });
-  // tested
-  usersRouter.get("/me", authorize, async (req: any, res: Response, next: NextFunction) => {
+  }
+);
+// tested
+usersRouter.get(
+  "/me",
+  authorize,
+  async (req: any, res: Response, next: NextFunction) => {
     try {
       res.send(req.user);
     } catch (error) {
       next(error);
     }
-  });
+  }
+);
 export default usersRouter;

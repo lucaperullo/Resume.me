@@ -10,7 +10,7 @@ const certificationsRouter = Router();
 
 // GET all certifications
 certificationsRouter.get(
-  "/certifications",
+  "/",
   async (req: any, res: Response, next: NextFunction) => {
     try {
       const certifications = await certificationsSchema.find();
@@ -23,9 +23,8 @@ certificationsRouter.get(
 
 // POST a new certification
 certificationsRouter.post(
-  "/certifications",
+  "/",
   authorize,
-
   internationalizer,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -33,7 +32,7 @@ certificationsRouter.post(
       await newCertification.save();
       res.status(201).send({
         message: "Certification created",
-        certification: { ...newCertification },
+        certification: newCertification,
       });
     } catch (error) {
       console.log(error);
@@ -43,7 +42,7 @@ certificationsRouter.post(
 
 // GET a certification by ID
 certificationsRouter.get(
-  "/certifications/:id",
+  "/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = req.params.id;
@@ -62,7 +61,7 @@ certificationsRouter.get(
 
 // PUT a certification by ID
 certificationsRouter.put(
-  "/certifications/:id",
+  "/:id",
   authorize,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -82,7 +81,7 @@ certificationsRouter.put(
 
 // DELETE a certification by ID
 certificationsRouter.delete(
-  "/certifications/:id",
+  "/:id",
   authorize,
   async (req: Request, res: Response, next: NextFunction) => {
     try {

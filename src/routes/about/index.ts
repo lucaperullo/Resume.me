@@ -11,7 +11,7 @@ const aboutRouter = Router();
 
 // GET all about
 aboutRouter.get(
-  "/about",
+  "/:userId",
   async (req: any, res: Response, next: NextFunction) => {
     try {
       const about = await aboutSchema.find();
@@ -24,16 +24,17 @@ aboutRouter.get(
 
 // POST a new about
 aboutRouter.post(
-  "/about",
+  "/",
   authorize,
   internationalizer,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const newAbout = new aboutSchema(req.body);
       await newAbout.save();
-      res
-        .status(201)
-        .send({ message: "About created", about: { ...newAbout } });
+      res.status(201).send({
+        message: "About created",
+        about: newAbout,
+      });
     } catch (error) {
       console.log(error);
     }
