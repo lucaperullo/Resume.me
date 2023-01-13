@@ -40,7 +40,7 @@ const connectToDatabase = async (app: any) => {
     await mongoose.connect(config.MONGO_URI!);
     app.listen(port, () => {
       console.table(listEndpoints(app));
-      console.log(`Server is flying on port: ${port}`);
+      console.log("\x1b[36m%s\x1b[0m",`Server is having tough time running away from ${port} angry monkeys`);
     });
   } catch (error) {
     console.error(error);
