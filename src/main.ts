@@ -29,9 +29,8 @@ app.use("/certifications", certificationsRouter);
 app.use("/companies", companiesRouter);
 app.use("/experience", experiencesRouter);
 app.use("/locations", locationsRouter);
-app.use("/medadata", metadataRouter)
-app.use("/projects", projectsRouter)
-
+app.use("/medadata", metadataRouter);
+app.use("/projects", projectsRouter);
 
 const connectToDatabase = async (app: any) => {
   try {
@@ -40,7 +39,10 @@ const connectToDatabase = async (app: any) => {
     await mongoose.connect(config.MONGO_URI!);
     app.listen(port, () => {
       console.table(listEndpoints(app));
-      console.log("\x1b[36m%s\x1b[0m",`Server is having tough time running away from ${port} angry monkeys`);
+      console.log(
+        "\x1b[36m%s\x1b[0m",
+        `Server is having tough time running away from ${port} angry monkeys`
+      );
     });
   } catch (error) {
     console.error(error);

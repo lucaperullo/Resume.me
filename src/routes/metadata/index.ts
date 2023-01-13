@@ -9,21 +9,18 @@ import { internationalizer } from "../../utilities/internationalization";
 const metadataRouter = Router();
 
 // GET all metadata
-metadataRouter.get(
-  "/metadata",
-  async (req: any, res: Response, next: NextFunction) => {
-    try {
-      const metadata = await metadataSchema.find();
-      res.send(metadata);
-    } catch (error) {
-      console.log(error);
-    }
+metadataRouter.get("/", async (req: any, res: Response, next: NextFunction) => {
+  try {
+    const metadata = await metadataSchema.find();
+    res.send(metadata);
+  } catch (error) {
+    console.log(error);
   }
-);
+});
 
 // POST a new metadata
 metadataRouter.post(
-  "/metadata",
+  "/",
   authorize,
   internationalizer,
   async (req: Request, res: Response, next: NextFunction) => {
@@ -32,7 +29,7 @@ metadataRouter.post(
       await newMetadata.save();
       res.status(201).send({
         message: "Metadata created",
-        metadata: { ...newMetadata },
+        metadata: newMetadata,
       });
     } catch (error) {
       console.log(error);
@@ -42,8 +39,9 @@ metadataRouter.post(
 
 // PUT a new metadata
 metadataRouter.put(
-  "/metadata/:id",
+  "/:id",
   authorize,
+  internationalizer,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const metadata = await metadataSchema.findByIdAndUpdate(
@@ -63,7 +61,7 @@ metadataRouter.put(
 
 // DELETE a metadata
 metadataRouter.delete(
-  "/metadata/:id",
+  "/:id",
   authorize,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
