@@ -7,6 +7,15 @@ export interface User extends Document {
   surname: string;
   email: string;
   password: string;
+  certifications: any[];
+  companies: any[];
+  experiences: any[];
+  locations: any[];
+  projects: any[];
+  skills: any[];
+  reviews: any[];
+  about: any;
+
   role: "Admin" | "User";
   refreshTokens: { token: string }[];
 }

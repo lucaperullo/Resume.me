@@ -5,6 +5,7 @@ import { Request, Response, NextFunction } from "express";
 import certificationsSchema from "./schema";
 import { authorize } from "../../utilities/auth/middleware";
 import { internationalizer } from "../../utilities/internationalization";
+import UserSchema from "../user/schema";
 
 const certificationsRouter = Router();
 
@@ -26,14 +27,24 @@ certificationsRouter.post(
   "/",
   authorize,
   internationalizer,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: any, res: Response, next: NextFunction) => {
     try {
-      const newCertification = new certificationsSchema(req.body);
-      await newCertification.save();
-      res.status(201).send({
-        message: "Certification created",
-        certification: newCertification,
+      let userId = req.user._id;
+      const newCertification = new certificationsSchema({
+        ...req.body,
+        userId,
       });
+      await newCertification.save();
+      let user = await UserSchema.findByIdAndUpdate(userId, {
+        $push: { certifications: newCertification._id },
+      });
+      if (user) {
+        user.save();
+        res.status(201).send({
+          message: "Certification created",
+          certification: newCertification,
+        });
+      }
     } catch (error) {
       console.log(error);
     }

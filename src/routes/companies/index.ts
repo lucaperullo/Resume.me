@@ -4,6 +4,7 @@ import companySchema from "./schema";
 import { Request, Response, NextFunction } from "express";
 import { authorize } from "../../utilities/auth/middleware";
 import { internationalizer } from "../../utilities/internationalization";
+import UserSchema from "../user/schema";
 
 const companiesRouter = Router();
 
@@ -25,14 +26,30 @@ companiesRouter.post(
   "/",
   authorize,
   internationalizer,
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: any, res: Response, next: NextFunction) => {
     try {
-      const newCompany = new companySchema(req.body);
-      await newCompany.save();
-      res.status(201).send({
-        message: "Company created",
-        company: newCompany,
+      let userId = req.user._id;
+      const newCompany = new companySchema({
+        ...req.body,
+        userId,
       });
+      await newCompany.save();
+
+      const user = await UserSchema.findByIdAndUpdate(userId, {
+        $push: { companies: newCompany._id },
+      });
+
+      if (user) {
+        await user.save();
+        res.status(201).send({
+          message: "Company created",
+          company: newCompany,
+        });
+      } else {
+        res.status(404).send({
+          message: "User not found",
+        });
+      }
     } catch (error) {
       console.log(error);
     }

@@ -77,6 +77,7 @@ const companySchema = new Schema(
       ref: "Location",
       required: true,
     },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,

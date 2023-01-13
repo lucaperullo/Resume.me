@@ -95,6 +95,7 @@ const aboutSchema = new Schema(
       required: true,
       match: [/^https?:\/\//, "Please use a valid URL with HTTP or HTTPS"],
     },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
   },
   {
     timestamps: true,

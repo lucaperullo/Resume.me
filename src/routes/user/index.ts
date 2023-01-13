@@ -101,7 +101,14 @@ usersRouter.get(
   authorize,
   async (req: any, res: Response, next: NextFunction) => {
     try {
-      res.send(req.user);
+      let user = await UserSchema.findById(req.user._id)
+        .populate("about")
+        .populate("certifications");
+      if (user) {
+        res.status(200).send(user);
+      } else {
+        res.status(404).send({ message: "User not found" });
+      }
     } catch (error) {
       next(error);
     }
