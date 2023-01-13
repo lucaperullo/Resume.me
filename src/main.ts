@@ -41,7 +41,7 @@ const connectToDatabase = async (app: any) => {
     await dotenv.config();
     mongoose.set("strictQuery", true);
 
-    await mongoose.connect(process.env.MONGO_URI!);
+    await mongoose.connect(process.env.MONGO_URI as string);
     app.listen(port, () => {
       console.table(listEndpoints(app));
       console.log("\x1b[36m%s\x1b[0m",`Server is having tough time running away from ${port} angry monkeys`);
