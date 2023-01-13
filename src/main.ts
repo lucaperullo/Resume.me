@@ -16,7 +16,7 @@ import metadataRouter from "./routes/metadata";
 import projectsRouter from "./routes/projects";
 const dotenv = require("dotenv");
 
-dotenv.config();
+
 
 const app = express();
 
@@ -38,6 +38,7 @@ app.use("/projects", projectsRouter)
 
 const connectToDatabase = async (app: any) => {
   try {
+    await dotenv.config();
     mongoose.set("strictQuery", true);
 
     await mongoose.connect(process.env.MONGO_URI!);
