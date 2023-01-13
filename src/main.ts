@@ -20,7 +20,7 @@ import path from "path";
 // import path,{ dirname } from "path";
 const dotenv = require("dotenv");
 // create corsOptions with origin filter 
-const whitelist = ["http://localhost:3000/","*", null]
+const whitelist = ["http://localhost:3000/",undefined, null]
 const corsOptions = {
   origin: function (origin: any, callback: any) {
     if (whitelist.indexOf(origin) !== -1) {
