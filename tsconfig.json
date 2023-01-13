@@ -2,7 +2,9 @@
 {
     "extends": "@tsconfig/node16/tsconfig.json",
     "compilerOptions": {
-      "outDir": "dist"
+      "outDir": "dist",
+      "target": "esnext",
+    "module": "esnext",
     },
     "types": [
       // ... your other types
