@@ -20,7 +20,7 @@ const generateJWT = (payload: object): Promise<string> =>
   new Promise((res, rej) =>
     jwt.sign(
       payload,
-      process.env.JWT_SECRET!,
+      process.env.JWT_SECRET as string,
       { expiresIn: "7d" },
       (error, token:any) => {
         if (error) rej(error);
@@ -31,7 +31,7 @@ const generateJWT = (payload: object): Promise<string> =>
 
 const verifyJWT = (token: string): Promise<object> =>
   new Promise((res, rej) =>
-    jwt.verify(token, process.env.JWT_SECRET!, (error, decoded:any) => {
+    jwt.verify(token, process.env.JWT_SECRET as string, (error, decoded:any) => {
       if (error) rej(error);
       res(decoded);
     })
@@ -41,7 +41,7 @@ const generateRefreshToken = (payload: object): Promise<string> =>
   new Promise((res, rej) =>
     jwt.sign(
       payload,
-      process.env.REFRESH_TOKEN_SECRET!,
+      process.env.REFRESH_TOKEN_SECRET as string,
       { expiresIn: "1 week" },
       (err, token:any) => {
         if (err) rej(err);
@@ -52,7 +52,7 @@ const generateRefreshToken = (payload: object): Promise<string> =>
 
 const verifyRefreshToken = (token: string): Promise<object> =>
   new Promise((res, rej) =>
-    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!, (err, decoded:any) => {
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET as string, (err, decoded:any) => {
       if (err) rej(err);
       res(decoded);
     })
