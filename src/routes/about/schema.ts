@@ -2,6 +2,40 @@ import { Schema, model } from "mongoose";
 
 const aboutSchema = new Schema(
   {
+<<<<<<< HEAD
+=======
+  name:{
+    it: {
+      type: String,
+      required: true,
+    },
+    en: {
+      type: String,
+      required: true,
+    },
+    es: {
+      type: String,
+      required: true,
+    },
+    fr: {
+      type: String,
+      required: true,
+    },
+    de: {
+      type: String,
+      required: true,
+    },
+    pt: {
+      type: String,
+      required: true,
+    },
+    ru: {
+      type: String,
+      required: true,
+    },
+  },
+
+>>>>>>> e7291c26cab314eec0a1f5d2407e10cdc87f3c11
     description: {
       it: {
         type: String,
