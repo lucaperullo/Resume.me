@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import config from "./config/config";
 import usersRouter from "./routes/user";
 import skillsRouter from "./routes/skills";
+import aboutRouter from "./routes/about";
+import certification from "./routes/certifications";
 
 const app = express();
 
